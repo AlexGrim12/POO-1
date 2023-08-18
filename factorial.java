@@ -11,6 +11,7 @@ public class factorial {
     
         System.out.print("Ingrese el valor de n para calcular su factorial: ");
         int n = sc.nextInt(), factorial = 1;
+        sc.close();
 
         for(int aux = n; aux > 1; aux --) {
             factorial *= aux;

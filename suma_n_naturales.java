@@ -8,11 +8,13 @@ public class suma_n_naturales {
         
         System.out.print("Ingrese el valor de n: ");
         int n = sc.nextInt(), suma = 0;
+        sc.close();
 
         for(int i = 1; i <= n; i ++) {
             suma += i;
         }
 
         System.out.println("El valor de la suma de los primeros " + n + " naturales es: " + suma);
+
     }
 }
