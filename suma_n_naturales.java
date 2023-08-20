@@ -1,4 +1,4 @@
-// Realice un programa en JAVA que calcule la suma de los primeros n números naturales, donde n sea un parámetro que se recibe del teclado. 
+// 32020610-2. Acosta Porcayo Alan Omar. 
 
 import java.util.Scanner;
 

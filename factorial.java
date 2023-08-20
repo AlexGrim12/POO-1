@@ -1,7 +1,4 @@
-/*
- * Realice un programa en JAVA que calcule el factorial de un numero natural n incluyendo 
- * el cero usando un ciclo for decremental, n puede ser una variable fija dentro del programa.
- */
+// 32020610-2. Acosta Porcayo Alan Omar.
 
 import java.util.Scanner;
 
