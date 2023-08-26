@@ -1,30 +1,27 @@
 import java.util.Scanner;
 import java.util.Random;
 
-public class adivina{
+public class Adivina {
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        Random ran = new Random();
-        
-        int tries = 4, ranNum = ran.nextInt(100) + 1, guess;
-        
-        while(tries > 0) {
-            System.out.print("Adivina el numero entre 1-100: ");
-            guess = sc.nextInt();
-            tries --;
+        Scanner s = new Scanner(System.in);
+        Random t = new Random();
 
-            if (guess == ranNum && tries > 0) {
-                System.out.println("ERES UN PRO! le atinaste al numero aleatorio");
+        int i = 4, a = t.nextInt(100);
+
+        while (i > 0) {
+            System.out.print("Adivina el numero entre 0-99 : ");
+            int b = s.nextInt();
+            i--;
+
+            if (a == b)
                 break;
-            } else if (tries > 0) {
-                System.out.print("Un intento menos\t");
-                if(guess > ranNum) System.out.println("Menos\n");
-                else System.out.println("Mas\n");
+            else if (i != 0){
+                System.out.println("Un intento menos");
+                System.out.println(a > b ? "Mas\n" : "Menos\n");
             }
         }
+        s.close();
 
-        if (tries == 0) System.out.println("\nNo pudiste!");
-        System.out.println("El numero aleatorio es: " + ranNum);
-        sc.close();
+        System.out.println(i == 0 ? "\nNo pudiste! El numero aleatorio es: " + a : "\nERES UN PRO! le atinaste al numero aleatorio");
     }
 }
