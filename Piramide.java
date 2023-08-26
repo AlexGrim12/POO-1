@@ -1,6 +1,6 @@
 import java.util.Random;
 
-public class Triangulo {
+public class Piramide {
     public static void main(String[] args) {
         Random rand = new Random();
 
