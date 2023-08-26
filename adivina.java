@@ -22,6 +22,6 @@ public class Adivina {
         }
         s.close();
 
-        System.out.println(i == 0 ? "\nNo pudiste! El numero aleatorio es: " + a : "\nERES UN PRO! le atinaste al numero aleatorio");
+        System.out.println(i == 0 ? "\nNo pudiste! El numero aleatorio es: " + a : "\nLe atinaste al numero aleatorio");
     }
 }
