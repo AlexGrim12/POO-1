@@ -1,3 +1,5 @@
+// 32020610-2. Acosta Porcayo Alan Omar.
+
 import java.util.Scanner;
 import java.util.Random;
 
