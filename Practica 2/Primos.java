@@ -10,7 +10,13 @@ public class Primos {
         n = sc.nextInt();
 
         for(int i = 2; i <= n; i ++) {
-            System.out.print(((i % 2 == 0 & i != 2) || (i % 3 == 0 & i != 3) || (i % 5 == 0 & i != 5) || (i % 7 == 0 & i != 7)) ? "" : i + " ");
+            if (i == 2 || i == 3 || i == 5 || i == 7) {
+                System.out.print(i + " ");
+                continue;
+            }
+            if (i % 2 == 0 || i % 3 == 0 || i % 5 == 0 || i % 7 == 0)
+                continue;
+            System.out.print(i + " ");
         }
         System.out.println();
         sc.close();
