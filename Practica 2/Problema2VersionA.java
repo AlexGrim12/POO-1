@@ -13,16 +13,16 @@ public class Problema2VersionA {
         "tamborileros tocando el tambor"
     };
 
-    static void Estrofas(int i, int j) {
+    static void estrofas(int i, int j) {
         if (j < i) {
             System.out.println(Numeros[j] + " " + Regalos[j]);    
-            Estrofas(i, j + 1);
+            estrofas(i, j + 1);
         } else
         System.out.println();
     }
 
     public static void main(String[] args) {
         for(int i = 1; i <= 12; i ++)
-            Estrofas(i, 0);
+            estrofas(i, 0);
     }
 }
