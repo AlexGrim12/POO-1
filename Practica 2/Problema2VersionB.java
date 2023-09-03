@@ -17,7 +17,7 @@ public class Problema2VersionB {
 
     static Integer[] Arr = new Integer[12]; 
 
-    static void GenerarOrdenAleatorio() {
+    static void generarOrdenAleatorio() {
         Random rand = new Random();
         int i = 0;
 
@@ -39,18 +39,18 @@ public class Problema2VersionB {
         }
     }
 
-    static void Estrofas(int i, int j) {
+    static void estrofas(int i, int j) {
         if (j < i) {
             System.out.println(Numeros[Arr[j]] + " " + Regalos[Arr[j]]);    
-            Estrofas(i, j + 1);
+            estrofas(i, j + 1);
         } else
         System.out.println();
     }
 
     public static void main(String[] args) {
-        GenerarOrdenAleatorio();
+        generarOrdenAleatorio();
 
         for(int i = 1; i <= 12; i ++)
-            Estrofas(i, 0);
+            estrofas(i, 0);
     }   
 }
