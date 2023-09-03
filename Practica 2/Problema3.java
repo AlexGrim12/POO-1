@@ -46,5 +46,4 @@ public class Problema3 {
         System.out.println("\n" + Generation(n, s));
         sc.close();
     }
-
 }
