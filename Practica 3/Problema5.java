@@ -15,9 +15,9 @@ public class Problema5 {
         zeus = new DefaultMutableTreeNode("Zeus");
         DefaultMutableTreeNode ades = new DefaultMutableTreeNode("Ades");
         DefaultMutableTreeNode hestia = new DefaultMutableTreeNode("Hestia");
-        DefaultMutableTreeNode demeter = new DefaultMutableTreeNode("Deméter");
+        DefaultMutableTreeNode demeter = new DefaultMutableTreeNode("Demeter");
         DefaultMutableTreeNode hera = new DefaultMutableTreeNode("Hera");
-        DefaultMutableTreeNode poseidon = new DefaultMutableTreeNode("Poseidón");
+        DefaultMutableTreeNode poseidon = new DefaultMutableTreeNode("Poseidon");
 
         DefaultMutableTreeNode hefesto = new DefaultMutableTreeNode("Hefesto");
         DefaultMutableTreeNode ares = new DefaultMutableTreeNode("Ares");
@@ -28,7 +28,7 @@ public class Problema5 {
         DefaultMutableTreeNode apolo = new DefaultMutableTreeNode("Apolo");
         DefaultMutableTreeNode afrodita = new DefaultMutableTreeNode("Afrodita");
 
-        // Construir el árbol genealógico
+        // Construir el arbol genealogico
         uranos.add(cronos);
 
         cronos.add(zeus);
