@@ -36,7 +36,6 @@ public class Anagrama {
         palabra2 = sc.nextLine();
 
         System.out.println(esAnagrama(palabra1, palabra2));
-
         sc.close();
     }
 }
