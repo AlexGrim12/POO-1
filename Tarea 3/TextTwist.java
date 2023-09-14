@@ -59,7 +59,7 @@ public class TextTwist {
 
         public boolean isSolution(String s) {
             s = s.toUpperCase();
-            for(int i = 0; i < solutions.size(); i++) {
+            for(int i = 0; i < this.solutions.size(); i++) {
                 if(this.solutions.get(i).equals(s)) {
                     this.solutions.remove(i);
                     return true;

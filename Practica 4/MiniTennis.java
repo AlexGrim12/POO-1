@@ -2,7 +2,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awl.RenderingHints;
+import java.awt.RenderingHints;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -60,6 +60,4 @@ public class MiniTennis extends JPanel {
         ball.move();
         racquet.move();
     }
-
-
 }

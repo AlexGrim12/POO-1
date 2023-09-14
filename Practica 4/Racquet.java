@@ -40,7 +40,4 @@ public class Racquet {
     public int getY() {
         return Y;
     }
-
-    // Attributes
-    
 }
