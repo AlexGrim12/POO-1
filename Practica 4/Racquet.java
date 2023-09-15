@@ -1,43 +1,45 @@
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
+import java.awt.Rectangle;
+import java.awt.Color;
 
 public class Racquet {
-    private static final int WIDTH = 60;
-    private static final int HEIGHT = 10;
-    private static final int Y = 330;
-    
-    public Racquet(MiniTennis game) {
-        this.game = game;
-    }   
+	private static final int Y = 330;
+	private static final int WIDTH = 60;
+	private static final int HEIGHT = 10;
 
-    public void move() {
-        if (x + xa > 0 && x + xspd < game.getWidth() - WIDTH)
-            x = x + xspd;
-    }
+	private MiniTennis game;
+	private int x;
+	private int xspd;
+	public Racquet(MiniTennis game) {
+		this.game = game;
+	}
 
-    public void paint(Graphics2D g) {
-        g.fillRect(x, Y, WIDTH, HEIGHT);
-    }
+	public void move() {
+		if (x + xspd > 0 && x + xspd < game.getWidth()- WIDTH)
+			x = x + xspd;
+	}
 
-    // Listeners
-    public void keyReleased(KeyEvent e) {
-        xspd = 0;
-    }
+	public void paint(Graphics2D g) {
+		g.fillRect(x, Y, WIDTH, HEIGHT);
+	}
 
-    public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_LEFT)
-            xspd = -game.speed;
-        if (e.getKeyCode() == KeyEvent.VK_RIGHT)
-            xspd = game.speed;
-    }
+	public void keyReleased(KeyEvent e) {
+		xspd = 0;
+	}
 
-    // Getters
-    public Rectangle getBounds() {
-        return new Rectangle(x, Y, WIDTH, HEIGHT);
-    }
+	public void keyPressed(KeyEvent e) {
+		if (e.getKeyCode() == KeyEvent.VK_LEFT)
+			xspd = -game.speed;
+		if (e.getKeyCode() == KeyEvent.VK_RIGHT)
+			xspd = game.speed;
+	}
 
-    public int getY() {
-        return Y;
-    }
+	public Rectangle getBounds() {
+		return new Rectangle(x, Y, WIDTH, HEIGHT);
+	}
+
+	public int getY() {
+		return Y;
+	}
 }
