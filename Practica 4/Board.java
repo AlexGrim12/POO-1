@@ -33,8 +33,7 @@ public class Board extends JPanel implements ActionListener {
   private int apple_x;
   private int apple_y;
   private int score = 0;
-  private int delay = 120;
-
+  
   private boolean leftDirection = false;
   private boolean rigthDirection = true;
   private boolean upDirection = false;
@@ -45,7 +44,8 @@ public class Board extends JPanel implements ActionListener {
   private Image apple;
   private Image head;
   private Timer timer;
-
+  private int delay = 120;
+  
   private String[] speeds = { "Babosa", "Gusano", "Anaconda" };
 
   public Board() {
@@ -86,11 +86,10 @@ public class Board extends JPanel implements ActionListener {
         speeds,
         speeds[0]);
 
-    switch (speed) {
-      case "Babosa": delay += 40; break;
-      case "Anaconda": delay -= 40; break;
-      default: break;
-    }
+    if(speed.equals("Babosa"))
+      delay = 160;
+    else if(speed.equals("Anaconda"))
+      delay = 80;
   }
 
   private void initGame() {
