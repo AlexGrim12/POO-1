@@ -140,7 +140,7 @@ public class Board extends JPanel implements ActionListener {
 
     int n = JOptionPane.showConfirmDialog(
         this,
-        "¿Quieres volver a jugar?",
+        "Quieres volver a jugar?",
         "Game Over",
         JOptionPane.YES_NO_OPTION);
 
