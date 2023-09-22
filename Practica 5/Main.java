@@ -1,12 +1,12 @@
 interface Poligono {
-    // firma de métodos
+    // firma de metodos
     void getArea(int a, int b);
 }  
 
 class Rectangulo implements Poligono {
-    // implementacion del método de la interfaz
+    // implementacion del metodo de la interfaz
     public void getArea(int a, int b) {
-        System.out.println("El área del rectangulo es: " + (a * b));
+        System.out.println("El area del rectangulo es: " + (a * b));
     }
 }
 
