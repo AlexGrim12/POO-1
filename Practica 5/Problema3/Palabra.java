@@ -3,16 +3,21 @@ import java.util.Random;
 
 public class Palabra {
     private ArrayList<String> words = new ArrayList<String>();
-    private String word;
-    Random rand = new Random();
+    private StringBuilder word = new StringBuilder();
+    private StringBuilder hiddenWord = new StringBuilder();
+    private Random rand = new Random();
 
     public Palabra() {
         setWords();
-        int i = rand.nextInt(words.size());
-        setWord(i);
+        
+        int r = rand.nextInt(words.size());
+        this.word = new StringBuilder(words.get(r).toUpperCase());
+        
+        for(int i = 0; i < word.length(); i++)
+            this.hiddenWord.append('_');
     }
 
-    public void setWords() {
+    private void setWords() {
         words.add("personas");
         words.add("computadora");
         words.add("ciudad");
@@ -45,11 +50,24 @@ public class Palabra {
         words.add("naturaleza");
     }
 
-    private void setWord(int i) {
-        this.word = words.get(i);
+    public StringBuilder getWord() {
+        return this.word;
     }
 
-    public String getWord() {
-        return this.word;
+    public StringBuilder getHiddenWord() {
+        return this.hiddenWord;
+    }
+
+    public boolean guessLetter(char l) {
+        boolean inWord = false;
+        
+        for(int i = 0; i < word.length(); i++) {
+            if(word.charAt(i) == l) {
+                this.hiddenWord.setCharAt(i, l);
+                inWord = true;
+            }
+        }
+        
+        return inWord;
     }
 }
