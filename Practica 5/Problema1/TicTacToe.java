@@ -48,6 +48,12 @@ public class TicTacToe implements Board {
             }
         }
 
+        for(int i = 0; i < 25; i++) {
+            if (board[i].equals(String.valueOf(i + 1))) {
+                return null;
+            } 
+        }
+
         return "Empate";
     }
 
@@ -63,6 +69,8 @@ public class TicTacToe implements Board {
 
     public static void main(String[] args) {
         TicTacToe t = new TicTacToe();
+        int turno = 1;
+        String jugadorActual = "X";
         String winner = null;
 
         System.out.println("Bienvenido Tic Tac Toe 5x5");
@@ -70,31 +78,26 @@ public class TicTacToe implements Board {
         while (winner == null) {
             t.printBoard();
             int move;
-            if (playerX.symbol.equals("X")) {
-                move = playerX.makeMove();
-            } else {
-                move = playerO.makeMove();
-            }
 
-            if (move >= 1 && move <= 25 && board[move - 1].equals(String.valueOf(move))) {
-                board[move - 1] = playerX.symbol.equals("X") ? "X" : "O";
-            } else {
-                System.out.println("Movimiento inválido. Inténtalo de nuevo.");
-                continue;
-            }
+            do {
+                if (turno % 2 == 1) {
+                    move = playerX.makeMove();
+                    jugadorActual = playerX.symbol;
+                } else {
+                    move = playerO.makeMove();
+                    jugadorActual = playerO.symbol;
+                }
+                
+                if (move < 1 && move > 25 && !board[move - 1].equals(String.valueOf(move))) {
+                    System.out.println("Movimiento inválido. Inténtalo de nuevo.");
+                } else {
+                    board[move - 1] = jugadorActual;
+                turno++;
+                }
+            } while(move < 1 || move > 25 || !board[move - 1].equals(String.valueOf(move)));
 
             winner = t.checkWinner();
-
-            if (playerX.symbol.equals("X")) {
-                playerX = playerO;
-                playerO = new HumanPlayer("O");
-            } else {
-                playerX = playerO;
-                playerO = new HumanPlayer("X");
-            }
         }
-
-        t.printBoard();
 
         if (winner.equals("Empate")) {
             System.out.println("Es un empate!");
