@@ -8,6 +8,8 @@ abstract class Player {
 }
 
 class HumanPlayer extends Player {
+    Scanner scanner = new Scanner(System.in);
+
     public HumanPlayer(String symbol) {
         setSymbol(symbol);
     }
@@ -19,10 +21,8 @@ class HumanPlayer extends Player {
 
     @Override
     public int makeMove() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Es el turno de " + symbol + ". Ingresa un número del 1 al 25: ");
+        System.out.print("Es el turno de " + this.symbol + ". Ingresa un número del 1 al 25: ");
         int move = scanner.nextInt();
-        scanner.close();
         return move;
     }
 }
