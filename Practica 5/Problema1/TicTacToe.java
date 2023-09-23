@@ -88,12 +88,14 @@ public class TicTacToe implements Board {
                     jugadorActual = playerO.symbol;
                 }
                 
-                if (move < 1 && move > 25 && !board[move - 1].equals(String.valueOf(move))) {
-                    System.out.println("Movimiento inválido. Inténtalo de nuevo.");
-                } else {
+                if(move >= 1 && move <= 25 && 
+                    !board[move - 1].equals(playerX.symbol) && 
+                    !board[move - 1].equals(playerO.symbol)) {
                     board[move - 1] = jugadorActual;
                     turno++;
                     break;
+                } else {
+                    System.out.println("Movimiento inválido. Inténtalo de nuevo.");
                 }
             } while(true);
 
