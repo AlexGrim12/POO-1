@@ -92,9 +92,10 @@ public class TicTacToe implements Board {
                     System.out.println("Movimiento inválido. Inténtalo de nuevo.");
                 } else {
                     board[move - 1] = jugadorActual;
-                turno++;
+                    turno++;
+                    break;
                 }
-            } while(move < 1 || move > 25 || !board[move - 1].equals(String.valueOf(move)));
+            } while(true);
 
             winner = t.checkWinner();
         }
