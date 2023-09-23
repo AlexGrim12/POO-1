@@ -9,7 +9,10 @@ public class TicTacToe implements Board {
     private static HumanPlayer playerO = new HumanPlayer("O");
 
     public TicTacToe() {
-        for (int i = 0; i < 25; i++) {
+        for (int i = 0; i < 9; i ++) {
+            board[i] = "0" + String.valueOf(i + 1);
+        }
+        for (int i = 9; i < 25; i++) {
             board[i] = String.valueOf(i + 1);
         }
     }
@@ -72,13 +75,12 @@ public class TicTacToe implements Board {
         int turno = 1;
         String jugadorActual = "X";
         String winner = null;
+        int move;
 
         System.out.println("Bienvenido Tic Tac Toe 5x5");
+        t.printBoard();
 
         while (winner == null) {
-            t.printBoard();
-            int move;
-
             do {
                 if (turno % 2 == 1) {
                     move = playerX.makeMove();
@@ -99,6 +101,7 @@ public class TicTacToe implements Board {
                 }
             } while(true);
 
+            t.printBoard();
             winner = t.checkWinner();
         }
 
