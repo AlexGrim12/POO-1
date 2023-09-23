@@ -97,7 +97,7 @@ public class TicTacToe implements Board {
                     turno++;
                     break;
                 } else {
-                    System.out.println("Movimiento inválido. Inténtalo de nuevo.");
+                    System.out.println("Movimiento invalido. Intentalo de nuevo.");
                 }
             } while(true);
 
@@ -108,7 +108,7 @@ public class TicTacToe implements Board {
         if (winner.equals("Empate")) {
             System.out.println("Es un empate!");
         } else {
-            System.out.println("¡El ganador es " + winner + "!");
+            System.out.println("El ganador es " + winner + "!");
         }
     }
 }

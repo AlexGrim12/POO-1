@@ -21,7 +21,8 @@ class HumanPlayer extends Player {
 
     @Override
     public int makeMove() {
-        System.out.print("Es el turno de " + this.symbol + ". Ingresa un número del 1 al 25: ");
+        System.out.print("Es el turno de " + this.symbol);
+        System.out.print(". Ingresa un numero del 1 al 25: ");
         int move = scanner.nextInt();
         return move;
     }
