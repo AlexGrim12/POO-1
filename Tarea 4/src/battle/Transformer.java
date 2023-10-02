@@ -147,7 +147,7 @@ public class Transformer implements MegaTransformers {
         } else 
             System.out.println(enemy.getName() + " no se defiende");
 
-        System.out.print(this.getName() + " ataca a " + enemy.getName() + " con " + damageCount + " de daño ");
+        System.out.print(this.getName() + " ataca a " + enemy.getName() + " con " + damageCount + " de danio ");
         System.out.println("y " + enemy.getName() + " se defiende con " + defenseCount + " de defensa");
         if (damageCount - defenseCount > 0)
             enemy.getHit(damageCount - defenseCount);

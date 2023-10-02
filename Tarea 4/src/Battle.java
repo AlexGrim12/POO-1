@@ -25,25 +25,34 @@ public class Battle {
 
     public static void makeTeams() {
         Random rand = new Random();
-        ArrayList<String> names = new ArrayList<>(Arrays.asList("Adrian", "Bruno", "Carlos", "David", "Eduardo", "Fernando", "Gabriel", "Juan"));
+        ArrayList<String> names = new ArrayList<>();
         ArrayList<Weapons> atkWeapons = new ArrayList<Weapons>();
         ArrayList<Weapons> defWeapons = new ArrayList<Weapons>();
         
-        atkWeapons.add(new AtkWeapons("Cañón de ion", rand.nextInt(6) + 10));
-        atkWeapons.add(new AtkWeapons("Cañón láser", rand.nextInt(6) + 10));
-        atkWeapons.add(new AtkWeapons("Golpe de energía", rand.nextInt(6) + 10));
+        names.add("Adrian");
+        names.add("Bruno");
+        names.add("Carlos");
+        names.add("David");
+        names.add("Eduardo");
+        names.add("Fernando");
+        names.add("Gabriel");
+        names.add("Juan");
+
+        atkWeapons.add(new AtkWeapons("Canion de ion", rand.nextInt(6) + 10));
+        atkWeapons.add(new AtkWeapons("Canion laser", rand.nextInt(6) + 10));
+        atkWeapons.add(new AtkWeapons("Golpe de energia", rand.nextInt(6) + 10));
         atkWeapons.add(new AtkWeapons("Rayo de calor", rand.nextInt(6) + 10));
-        atkWeapons.add(new AtkWeapons("Cañón de plasma", rand.nextInt(6) + 10));
-        atkWeapons.add(new AtkWeapons("Cañón de rayos", rand.nextInt(6) + 10));
+        atkWeapons.add(new AtkWeapons("Canion de plasma", rand.nextInt(6) + 10));
+        atkWeapons.add(new AtkWeapons("Canion de rayos", rand.nextInt(6) + 10));
         atkWeapons.add(new AtkWeapons("Golpe de fuerza", rand.nextInt(6) + 10));
-        atkWeapons.add(new AtkWeapons("Rayo de congelación", rand.nextInt(6) + 10));
+        atkWeapons.add(new AtkWeapons("Rayo de congelacion", rand.nextInt(6) + 10));
         
-        defWeapons.add(new DefWeapons("Escudo de energía", rand.nextInt(6) + 8));
+        defWeapons.add(new DefWeapons("Escudo de energíi", rand.nextInt(6) + 8));
         defWeapons.add(new DefWeapons("Campo de fuerza", rand.nextInt(6) + 8));
         defWeapons.add(new DefWeapons("Bombas de humo", rand.nextInt(6) + 8));
-        defWeapons.add(new DefWeapons("Blindaje sónico", rand.nextInt(6) + 8));
-        defWeapons.add(new DefWeapons("Blindaje electromagnético", rand.nextInt(6) + 8));
-        defWeapons.add(new DefWeapons("Granada de Anulación", rand.nextInt(6) + 8));
+        defWeapons.add(new DefWeapons("Blindaje sonico", rand.nextInt(6) + 8));
+        defWeapons.add(new DefWeapons("Blindaje electromagnetico", rand.nextInt(6) + 8));
+        defWeapons.add(new DefWeapons("Granada de Anulacion", rand.nextInt(6) + 8));
         defWeapons.add(new DefWeapons("Disruptor de Campos", rand.nextInt(6) + 8));
         defWeapons.add(new DefWeapons("Escudo de examenes ;)", rand.nextInt(6) + 8));
         
@@ -108,14 +117,12 @@ public class Battle {
     
     public static void printTeams() {
         System.out.println("Equipo 1:");
-        for (Transformer t : b1) {
+        for (Transformer t : b1) 
             System.out.println(t.toString());
-        }
 
         System.out.println("\nEquipo 2:");
-        for (Transformer t : b2) {
+        for (Transformer t : b2)
             System.out.println(t.toString());
-        }
     }
 
     public static void checkState(int i, int n) {
@@ -178,9 +185,7 @@ public class Battle {
                 
                 b1CanFusion = b1.get(0).teamCanFusion(b1);
                 int r = rand.nextInt(10) + 1;
-                // Hay un tercio de probabilidad de fusionarse si el equipo puede fusionarse y el transformer no es lider y es Maximal o Predacon 
                 if (attacker != 0 && b1CanFusion && b1.get(attacker).canFusion() && r % 3 == 0) {
-                    // Buscar el otro miembro del equipo para transformarse
                     for (int t = 0; t < b1.size(); t ++) {
                         if (!b1.get(t).isDefeated() && b1.get(t).canFusion() && t != attacker && t != 0) {
                             b1.get(t).fusion(b1, attacker, t);
@@ -228,9 +233,9 @@ public class Battle {
         }
 
         if(checkWinner() == 1)
-        System.out.println("\nGanó el equipo 1");
+        System.out.println("\nGano el equipo 1");
         else 
-        System.out.println("\nGanó el equipo 2");
+        System.out.println("\nGano el equipo 2");
         
         System.out.println("\nLa batalla acabo en " + nTurns + " turnos");
         System.out.println("\nEstado final de los equipos:");
