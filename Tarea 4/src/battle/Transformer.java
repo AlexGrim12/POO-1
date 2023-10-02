@@ -9,8 +9,9 @@ public class Transformer implements MegaTransformers {
     private String homePlanet;
     private int enduranceInitial; 
     private int endurance; 
-    private boolean defeated = false;
     private ArrayList<Weapons> weapons = new ArrayList<Weapons>();
+    private boolean defeated = false;
+    private boolean mol = false;
 
     // Setters
     public void setName(String name) {
@@ -45,6 +46,10 @@ public class Transformer implements MegaTransformers {
         this.defeated = defeated;
     }
 
+    public void setMlf(boolean mol) {
+        this.mol = mol;
+    }
+
     // Getters
     public String getName() {
         return this.name;
@@ -74,6 +79,10 @@ public class Transformer implements MegaTransformers {
         return this.defeated;
     }
 
+    public boolean getMlf() {
+        return this.mol;
+    }
+
     // Methods
     public void getHit(int damage) {
         this.endurance -= damage;
@@ -84,27 +93,41 @@ public class Transformer implements MegaTransformers {
         int r = rand.nextInt(2);
 
         if (r == 0) 
-            return 4;
+            return 8;
         else 
-            return 6;
+            return 12;
     }
 
-    public void attack(Transformer enemy) {
+    public void attack(Transformer enemy, ArrayList<Transformer> b1, ArrayList<Transformer> b2) {
         Random random = new Random();
         int rAtk   = random.nextInt(100) + 1;
         int rDef = random.nextInt(100) + 1;
         int damageCount = 0;
         int defenseCount = 0;
 
-        System.out.println(rAtk + "\t" + rDef);
         if (rAtk   <= 60) {
             damageCount = this.basicAttack();
             System.out.println(this.getName() + " usa ataque basico");
         }
         else if (rAtk <= 95) {
-            AtkWeapons w = (AtkWeapons) this.getWeapons().get(0);
-            System.out.println(this.getName() + " usa " + w.getName());          
-            damageCount = w.getDamage();
+            int nAtkWeapons = 0;
+
+            for (Weapons i: this.getWeapons()) {
+                if (i instanceof AtkWeapons) {
+                    nAtkWeapons++;
+                }
+            }
+     
+            if (nAtkWeapons == 2) {
+                int i = random.nextInt(2);
+                AtkWeapons w = (AtkWeapons) this.getWeapons().get(i);
+                System.out.println(this.getName() + " usa " + w.getName());
+                damageCount = w.getDamage();
+            } else {
+                AtkWeapons w = (AtkWeapons) this.getWeapons().get(0);
+                System.out.println(this.getName() + " usa " + w.getName());
+                damageCount = w.getDamage();
+            }
         } else {
             System.out.println(this.getName() + " usa combo de 3 golpes basicos");
             for (int i = 0; i < 3; i ++)
@@ -112,9 +135,20 @@ public class Transformer implements MegaTransformers {
         }
 
         if (rDef <= 10) {
-            DefWeapons w = (DefWeapons) enemy.getWeapons().get(1);
-            System.out.println(enemy.getName() + " usa " + w.getName());
-            defenseCount = w.getDefense();
+            int nDefWeapons = 0;
+
+            for (Weapons i: enemy.getWeapons()) {
+                if (i instanceof DefWeapons) {
+                    nDefWeapons++;
+                }
+            }
+
+            if (nDefWeapons == 1) {
+                DefWeapons w = (DefWeapons) enemy.getWeapons().get(1);
+                System.out.println(enemy.getName() + " usa " + w.getName());
+                defenseCount = w.getDefense();
+            } else
+                System.out.println(enemy.getName() + " no tiene armas de defensa"); 
         } else if (rDef <= 12) {
             defenseCount = damageCount / 2;
             System.out.println(enemy.getName() + " usa unidades de energon");
@@ -123,58 +157,76 @@ public class Transformer implements MegaTransformers {
 
         System.out.print(this.getName() + " ataca a " + enemy.getName() + " con " + damageCount + " de daño ");
         System.out.println("y " + enemy.getName() + " se defiende con " + defenseCount + " de defensa");
-        enemy.getHit(damageCount - defenseCount);
+        if (damageCount - defenseCount > 0)
+            enemy.getHit(damageCount - defenseCount);
+        System.out.println(enemy.getName() + " queda con " + enemy.getEndurance() + " de resistencia");
+
+        giveMol(b1, b2);
     }
 
-    public static void giveMatrixOfLeadership(ArrayList<Transformer> b1, ArrayList<Transformer> b2) {
+    private static void giveMol(ArrayList<Transformer> b1, ArrayList<Transformer> b2) {
+        // TODO Cambiar las condiciones para dar la matriz de liderazgo
+        
         boolean defeated = false;
         
         for (Transformer t : b1) {
-            if (t.endurance < (t.enduranceInitial)*0.75)
+            if (t.endurance < (t.enduranceInitial)*0.75){
+                System.out.println("Menos de 75% de resistencia");
                 return;
+            }
 
             if (t.defeated)
                 defeated = true;
         }
         
         for (Transformer t : b2) {
-            if (t.endurance < (t.enduranceInitial)*0.75)
+            if (t.endurance < (t.enduranceInitial)*0.75) {
+                System.out.println("Menos de 75% de resistencia");
                 return;
+            }
             
-            if (t.defeated)
+            if (t.defeated) 
                 defeated = true;
         }
 
-        if (defeated)
+        if (!defeated) {
+            System.out.println("Ningun transformer ha sido derrotado");
             return;
+        }
+            
+        if (b1.get(0).getMlf() || b2.get(0).getMlf()) {
+            System.out.println("Ya se ha usado la Matriz de Liderazgo");
+            return;
+        }
 
         Random rand = new Random();
         int n = rand.nextInt(2);
-        Weapons matrixOfLeadership = new AtkWeapons("Matrix of Leadership");
+        Weapons mol = new AtkWeapons("Matriz de Liderazgo");
 
         if (n == 0) {
-            b1.get(0).setWeapon(matrixOfLeadership);
-            System.out.println(b1.get(0).getName() + " obtiene la Matrix of Leadership");
-        }
+            b1.get(0).setMlf(true);
+            AtkWeapons w = (AtkWeapons) b1.get(0).getWeapons().get(0);
+            System.out.println(w.getDamage());
+            b1.get(0).useMol();
+            System.out.println(b1.get(0).getName() + " obtiene " + mol.getName() + " y la usa"); 
+            System.out.println(w.getDamage());
+        }   
         else {
-            b2.get(0).setWeapon(matrixOfLeadership);
-            System.out.println(b2.get(0).getName() + " obtiene la Matrix of Leadership");
+            b2.get(0).setMlf(true);
+            AtkWeapons w = (AtkWeapons) b2.get(0).getWeapons().get(0);
+            System.out.println(w.getDamage());
+            b2.get(0).useMol();
+            System.out.println(b2.get(0).getName() + " obtiene " + mol.getName() + " y la usa");
+            System.out.println(w.getDamage());
         } 
     }
 
-    private void useMatrixOfLeadership() {
+    private void useMol() {
         this.setEndurance(enduranceInitial);
         for (Weapons w : this.getWeapons()) {
-            if (w instanceof AtkWeapons){
+            if (w instanceof AtkWeapons) {
                 AtkWeapons a = (AtkWeapons) w;
                 a.setDamage(a.getDamage() * 2);
-                this.weapons.remove(w);
-                this.weapons.add(a);
-            } else {
-                DefWeapons d = (DefWeapons) w;
-                d.setDefense(d.getDefense() * 2);
-                this.weapons.remove(w);
-                this.weapons.add(d);
             }
         }
     }
@@ -219,12 +271,13 @@ public class Transformer implements MegaTransformers {
     public String toString() {
         StringBuilder s = new StringBuilder();
 
-        s.append("Nombre " + this.name);
-        s.append(", Raza" + this.race);
+        s.append("Nombre: " + this.name);
+        s.append(", Raza: " + this.race);
         s.append(", Mundo de origen: " + this.homePlanet);
         s.append(", Resistencia: " + this.endurance);
-        s.append(", Armas: " + this.weapons.size());
-        // s.append(", Armas: " + this.weapons.get(0).getName() + ", " + this.weapons.get(1).getName());
+        s.append(", Armas: ");
+        for (Weapons w : this.weapons)
+            s.append(w.getName() + ", ");
 
         return s.toString();
     }

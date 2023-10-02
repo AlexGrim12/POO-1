@@ -11,7 +11,4 @@ public class Autobot extends Transformer{
         setEndurance(endurance);
         setWeapons(weapons);
     }
-
-    // Methods
-    
 }
