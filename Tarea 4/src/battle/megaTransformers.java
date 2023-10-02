@@ -1,9 +1,9 @@
 package src.battle;
 
-public interface megaTransformers {
-    public String name = null;
-    public String type = null;
+import java.util.ArrayList;
 
-    // Methods
-    public void fusion();
+public interface MegaTransformers {    
+    public boolean canTransform(Transformer t1, Transformer t2);
+    public void transform(ArrayList<Transformer> b, int i, int j);
 }
+
