@@ -108,26 +108,17 @@ public class Transformer implements MegaTransformers {
         if (rAtk   <= 60) {
             damageCount = this.basicAttack();
             System.out.println(this.getName() + " usa ataque basico");
-        }
-        else if (rAtk <= 95) {
-            int nAtkWeapons = 0;
+        } else if (rAtk <= 95) {
+            ArrayList<AtkWeapons> atkOptions = new ArrayList<AtkWeapons>();
 
             for (Weapons i: this.getWeapons()) {
-                if (i instanceof AtkWeapons) {
-                    nAtkWeapons++;
-                }
+                if (i instanceof AtkWeapons)
+                    atkOptions.add((AtkWeapons) i);
             }
      
-            if (nAtkWeapons == 2) {
-                int i = random.nextInt(2);
-                AtkWeapons w = (AtkWeapons) this.getWeapons().get(i);
-                System.out.println(this.getName() + " usa " + w.getName());
-                damageCount = w.getDamage();
-            } else {
-                AtkWeapons w = (AtkWeapons) this.getWeapons().get(0);
-                System.out.println(this.getName() + " usa " + w.getName());
-                damageCount = w.getDamage();
-            }
+            int r = random.nextInt(atkOptions.size());
+            damageCount = atkOptions.get(r).getDamage();
+            System.out.println(this.getName() + " usa " + atkOptions.get(r).getName());
         } else {
             System.out.println(this.getName() + " usa combo de 3 golpes basicos");
             for (int i = 0; i < 3; i ++)
@@ -135,20 +126,21 @@ public class Transformer implements MegaTransformers {
         }
 
         if (rDef <= 10) {
-            int nDefWeapons = 0;
+            ArrayList<DefWeapons> defOptions = new ArrayList<DefWeapons>();
 
             for (Weapons i: enemy.getWeapons()) {
-                if (i instanceof DefWeapons) {
-                    nDefWeapons++;
-                }
+                if (i instanceof DefWeapons) 
+                    defOptions.add((DefWeapons) i);
             }
-
-            if (nDefWeapons == 1) {
-                DefWeapons w = (DefWeapons) enemy.getWeapons().get(1);
-                System.out.println(enemy.getName() + " usa " + w.getName());
-                defenseCount = w.getDefense();
-            } else
-                System.out.println(enemy.getName() + " no tiene armas de defensa"); 
+            
+            if (defOptions.size() == 0) 
+                System.out.println(enemy.getName() + " no tiene armas de defensa");
+            else {
+                int r = random.nextInt(defOptions.size());
+                defenseCount = defOptions.get(r).getDefense();
+                System.out.println(enemy.getName() + " usa " + defOptions.get(r).getName());
+            }
+            
         } else if (rDef <= 12) {
             defenseCount = damageCount / 2;
             System.out.println(enemy.getName() + " usa unidades de energon");
@@ -165,60 +157,62 @@ public class Transformer implements MegaTransformers {
     }
 
     private static void giveMol(ArrayList<Transformer> b1, ArrayList<Transformer> b2) {
-        // TODO Cambiar las condiciones para dar la matriz de liderazgo
+        // Se cambiaron las condiciones para que la matriz se use mas seguido
+        boolean defeated1 = false;
+        boolean defeated2 = false;
         
-        boolean defeated = false;
-        
-        for (Transformer t : b1) {
-            if (t.endurance < (t.enduranceInitial)*0.75){
-                System.out.println("Menos de 75% de resistencia");
-                return;
-            }
+        // No da la matriz si ambos lideres estan derrotados
+        if (b1.get(0).isDefeated() && b2.get(0).isDefeated())
+            return;    
 
-            if (t.defeated)
-                defeated = true;
+        // No da la matriz si alguno de los dos transformers ya la uso
+        if (b1.get(0).getMlf() || b2.get(0).getMlf())
+            return;
+
+        // No da la matriz si alguno de los dos lideres tiene mas de 75% de resistencia
+        if (b1.get(0).getEndurance() > b1.get(0).getEnduranceInitial()*0.75)
+            return;
+        
+        if (b2.get(0).getEndurance() > b2.get(0).getEnduranceInitial()*0.75)
+            return;
+
+        // La da si cada equipo tiene al menos un transformer derrotado
+        for (Transformer t : b1) {
+            if (t.isDefeated())
+                defeated1 = true;
         }
         
         for (Transformer t : b2) {
-            if (t.endurance < (t.enduranceInitial)*0.75) {
-                System.out.println("Menos de 75% de resistencia");
-                return;
-            }
-            
-            if (t.defeated) 
-                defeated = true;
+            if (t.isDefeated())
+                defeated2 = true;
         }
-
-        if (!defeated) {
-            System.out.println("Ningun transformer ha sido derrotado");
+ 
+        if (!defeated1 || !defeated2)
             return;
-        }
             
-        if (b1.get(0).getMlf() || b2.get(0).getMlf()) {
-            System.out.println("Ya se ha usado la Matriz de Liderazgo");
-            return;
-        }
-
-        Random rand = new Random();
-        int n = rand.nextInt(2);
         Weapons mol = new AtkWeapons("Matriz de Liderazgo");
-
-        if (n == 0) {
-            b1.get(0).setMlf(true);
-            AtkWeapons w = (AtkWeapons) b1.get(0).getWeapons().get(0);
-            System.out.println(w.getDamage());
-            b1.get(0).useMol();
-            System.out.println(b1.get(0).getName() + " obtiene " + mol.getName() + " y la usa"); 
-            System.out.println(w.getDamage());
-        }   
-        else {
+        if (b1.get(0).isDefeated()) {
             b2.get(0).setMlf(true);
-            AtkWeapons w = (AtkWeapons) b2.get(0).getWeapons().get(0);
-            System.out.println(w.getDamage());
             b2.get(0).useMol();
             System.out.println(b2.get(0).getName() + " obtiene " + mol.getName() + " y la usa");
-            System.out.println(w.getDamage());
-        } 
+        } else if (b2.get(0).isDefeated()) {
+            b1.get(0).setMlf(true);
+            b1.get(0).useMol();
+            System.out.println(b1.get(0).getName() + " obtiene " + mol.getName() + " y la usa"); 
+        } else {
+            Random rand = new Random();
+            int n = rand.nextInt(2);
+
+            if (n == 0) {
+                b1.get(0).setMlf(true);
+                b1.get(0).useMol();
+                System.out.println(b1.get(0).getName() + " obtiene " + mol.getName() + " y la usa"); 
+            } else {
+                b2.get(0).setMlf(true);
+                b2.get(0).useMol();
+                System.out.println(b2.get(0).getName() + " obtiene " + mol.getName() + " y la usa");
+            }
+        }
     }
 
     private void useMol() {
@@ -231,33 +225,50 @@ public class Transformer implements MegaTransformers {
         }
     }
 
-    public boolean canTransform(Transformer t1, Transformer t2) {
-        if (t1 instanceof Autobot && t2 instanceof Decepticon)
-            return false;
-        else 
+    public boolean teamCanFusion(ArrayList<Transformer> b) {
+        int count = 0;
+
+        for (Transformer t : b) {
+            if (t instanceof Maximal)
+                count++;
+            
+            if (t instanceof Predacon)
+                count++;
+        }
+
+        if (count >= 2)
             return true;
+        else 
+            return false;
     }
 
-    public void transform(ArrayList<Transformer> b, int i, int j) {
+    public boolean canFusion() {
+        return this instanceof Maximal || this instanceof Predacon;
+    }
+
+    public void fusion(ArrayList<Transformer> b, int i, int j) {
+        System.out.println(b.get(i).getName() + " y " + b.get(j).getName() + " se fusionan en un MegaTransformer");
+
         String name = b.get(i).getName() + " y " + b.get(j).getName();
-        String race = b.get(i).getRace() + " y " + b.get(j).getRace();
-        int enduranceInitial = b.get(i).getEnduranceInitial() * b.get(j).getEnduranceInitial();
-        int endurance = b.get(i).getEndurance() * b.get(j).getEndurance();
+        String race = "MegaTransformer";
+        int enduranceInitial = b.get(i).getEnduranceInitial() + b.get(j).getEnduranceInitial();
+        int endurance = b.get(i).getEndurance() + b.get(j).getEndurance();
         ArrayList<Weapons> weapons = new ArrayList<Weapons>();
         
-        for (Weapons w : b.get(i).getWeapons()) {
+        for (Weapons w : b.get(i).getWeapons())
             weapons.add(w);
-        }
 
-        for (Weapons w : b.get(j).getWeapons()) {
+        for (Weapons w : b.get(j).getWeapons())
             weapons.add(w);
-        }
 
-        b.remove(i);
-        b.remove(j);
+        Transformer b1 = b.get(i);
+        Transformer b2 = b.get(j);
+
+        b.remove(b1);
+        b.remove(b2);
 
         //Constructor
-        Transformer t = new Transformer();
+        Maximal t = new Maximal();
         t.setName(name);
         t.setRace(race);
         t.setHomePlanet("Cybertron");
