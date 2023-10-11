@@ -1,5 +1,7 @@
+// importamos librerias
 import java.awt.*;
 import java.awt.event.*;
+// para manejar listas
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import javax.swing.*;
@@ -11,7 +13,9 @@ import javax.sound.sampled.AudioFileFormat;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 
-public class GameOfLife extends JFrame implements ActionListener {
+public class GameOfLifeC extends JFrame implements ActionListener {
+
+  // variables fijas
   private static final Dimension DEFAULT_WINDOW_SIZE = new Dimension(800, 600);
   private static final Dimension MINIMUM_WINDOW_SIZE = new Dimension(400, 400);
   private static final int BLOCK_SIZE = 10;
@@ -29,10 +33,12 @@ public class GameOfLife extends JFrame implements ActionListener {
   private final JMenuItem mi_help_about;
   private int i_movesPerSecond = 3;
   private final GameBoard gb_gameBoard;
+  // PARA HACERLO ASINCRONO
   private Thread game;
 
   public static void main(String[] args) {
-    JFrame game = new GameOfLife();
+    // unir elementos graficos
+    JFrame game = new GameOfLifeC();
     game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     game.setTitle("Conway's Game of Life");
     ImageIcon img = new ImageIcon("logo.png");
@@ -44,7 +50,8 @@ public class GameOfLife extends JFrame implements ActionListener {
     game.setVisible(true);
   }
 
-  public GameOfLife() {
+  public GameOfLifeC() {
+    // construir nuestros menus
     mb_menu = new JMenuBar();
     setJMenuBar(mb_menu);
     m_file = new JMenu("File");
@@ -54,6 +61,7 @@ public class GameOfLife extends JFrame implements ActionListener {
     m_help = new JMenu("Help");
     mb_menu.add(m_help);
 
+    // poner las items de cada menu
     mi_file_options = new JMenuItem("Options");
     mi_file_options.addActionListener(this);
     mi_file_exit = new JMenuItem("Exit");
@@ -79,6 +87,7 @@ public class GameOfLife extends JFrame implements ActionListener {
     mi_help_about.addActionListener(this);
     m_help.add(mi_help_about);
 
+    // Setup game board
     gb_gameBoard = new GameBoard();
     add(gb_gameBoard);
 
@@ -107,8 +116,10 @@ public class GameOfLife extends JFrame implements ActionListener {
   @Override
   public void actionPerformed(ActionEvent ae) {
     if (ae.getSource().equals(mi_file_exit)) {
+      // Exit the game
       System.exit(0);
     } else if (ae.getSource().equals(mi_file_options)) {
+      // Put up an options panel to change the number of moves per second
       final JFrame f_options = new JFrame();
       f_options.setTitle("Options");
       f_options.setSize(300, 100);
@@ -192,6 +203,7 @@ public class GameOfLife extends JFrame implements ActionListener {
       point.clear();
     }
 
+    // un metodo por si las flies
     private void updateArraySize() {
       ArrayList<Point> removeList = new ArrayList<Point>(0);
       for (Point current : point) {
@@ -207,6 +219,7 @@ public class GameOfLife extends JFrame implements ActionListener {
       point.remove(new Point(x, y));
     }
 
+    // metodos de agregacion de mi array list
     public void addPoint(int x, int y) {
       if (!point.contains(new Point(x, y))) {
         point.add(new Point(x, y));
@@ -242,6 +255,8 @@ public class GameOfLife extends JFrame implements ActionListener {
               BLOCK_SIZE);
         }
       } catch (ConcurrentModificationException cme) {}
+
+      // conf nuestro grid
 
       g.setColor(Color.BLACK);
       for (int i = 0; i <= d_gameBoardSize.width; i++) {
@@ -304,6 +319,7 @@ public class GameOfLife extends JFrame implements ActionListener {
 
       ArrayList<Point> survivingCells = new ArrayList<Point>(0);
 
+      // REGLAS DEL JUEGO DE LA VIDA
       for (int i = 1; i < gameBoard.length - 1; i++) {
         for (int j = 1; j < gameBoard[0].length - 1; j++) {
           int surrounding = 0;
