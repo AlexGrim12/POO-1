@@ -28,11 +28,11 @@ public class Domino {
         Mesa mesa = new Mesa(tipoJuego);
 
         while (flag != 2) {
-            // try {
-            //     new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-            // } catch (Exception e) {
-            //     e.printStackTrace();
-            // }
+            try {
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
             System.out.println("\n\nMesa actual:");
             mesa.imprimir(mesa.getMesa());
