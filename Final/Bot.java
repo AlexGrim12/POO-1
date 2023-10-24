@@ -7,11 +7,11 @@ public class Bot extends Jugador {
 
     @Override
     public void turno(ArrayList<Ficha> mesaActual) {
-        try {
-            Thread.sleep(10000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }    
+        // try {
+        //     Thread.sleep(10000);
+        // } catch (InterruptedException e) {
+        //     e.printStackTrace();
+        // }    
 
         if (mesaActual.size() == 0) {
             int ficha = 0;
@@ -49,10 +49,10 @@ public class Bot extends Jugador {
             }
         }
 
-        try {
-            Thread.sleep(10000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }   
+        // try {
+        //     Thread.sleep(10000);
+        // } catch (InterruptedException e) {
+        //     e.printStackTrace();
+        // }   
     }
 }
