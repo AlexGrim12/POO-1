@@ -8,7 +8,7 @@ public class Bot extends Jugador {
     @Override
     public void turno(ArrayList<Ficha> mesaActual) {
         try {
-            Thread.sleep(5000);
+            Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }    
@@ -30,23 +30,23 @@ public class Bot extends Jugador {
                 if (fichas.get(i).getCaraIzq() == mesaActual.get(0).getCaraIzq()) {
                     fichas.get(i).girar();
                     mesaActual.add(0, fichas.get(i));
-                    System.out.println("Bot juega " + fichas.get(i) + " a la izquierda");
+                    System.out.println(nombre + " juega " + fichas.get(i) + " a la izquierda");
                     fichas.remove(i);
                     break;
                 } else if (fichas.get(i).getCaraDer() == mesaActual.get(0).getCaraIzq()) {
                     mesaActual.add(0, fichas.get(i));
-                    System.out.println("Bot juega " + fichas.get(i) + " a la izquierda");
+                    System.out.println(nombre + " juega " + fichas.get(i) + " a la izquierda");
                     fichas.remove(i);
                     break;
                 } else if (fichas.get(i).getCaraIzq() == mesaActual.get(mesaActual.size() - 1).getCaraDer()) {
                     mesaActual.add(fichas.get(i));
-                    System.out.println("Bot juega " + fichas.get(i) + " a la derecha");
+                    System.out.println(nombre + " juega " + fichas.get(i) + " a la derecha");
                     fichas.remove(i);
                     break;
                 } else if (fichas.get(i).getCaraDer() == mesaActual.get(mesaActual.size() - 1).getCaraDer()) {
                     fichas.get(i).girar();
                     mesaActual.add(fichas.get(i));
-                    System.out.println("Bot juega " + fichas.get(i) + " a la derecha");
+                    System.out.println(nombre + " juega " + fichas.get(i) + " a la derecha");
                     fichas.remove(i);
                     break;
                 }
@@ -54,7 +54,7 @@ public class Bot extends Jugador {
         }
 
         try {
-            Thread.sleep(5000);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }   

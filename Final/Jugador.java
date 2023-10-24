@@ -8,10 +8,6 @@ public abstract class Jugador {
         return nombre;
     }
 
-    public void setFichas(ArrayList<Ficha> fichas) {
-        this.fichas = fichas;
-    }
-
     public ArrayList<Ficha> getFichas() {
         return fichas;
     }
@@ -23,7 +19,7 @@ public abstract class Jugador {
     public void agregarFicha(Ficha ficha) {
         fichas.add(ficha);
     }
-    
+
     public int getCantidadFichas() {
         return fichas.size();
     }

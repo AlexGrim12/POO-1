@@ -1,4 +1,8 @@
+import java.io.File;
 import java.util.Scanner;
+
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 
 public class Domino {
     public static void decidirGanador(Mesa mesa) {
@@ -19,6 +23,14 @@ public class Domino {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
+        try {
+            Clip sonido = AudioSystem.getClip();
+            sonido.open(AudioSystem.getAudioInputStream(new File("MoonlightSonata.wav")));
+            sonido.loop(Clip.LOOP_CONTINUOUSLY); 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         System.out.println("%%%%%%%%%%%%%%% Bienvenido a Domino %%%%%%%%%%%%%%%");
         System.out.println("Escoga el modo de juego:");
         System.out.println("1. Jugador vs Bot");
@@ -26,6 +38,7 @@ public class Domino {
         System.out.print("$ ");
         int tipoJuego = sc.nextInt(), flag = 0;
         Mesa mesa = new Mesa(tipoJuego);
+
 
         while (flag != 2) {
             try {
@@ -46,8 +59,14 @@ public class Domino {
             else {
                 int fichasRobadas = 1;
                 while (mesa.getPozo().size() != 0 && !mesa.getJugadores().get(0).puedeJugar(mesa.getMesa())) {
-                    System.out.println(mesa.getJugadores().get(0).getNombre() + " roba " + fichasRobadas++ + " ficha");
+                    try {
+                        Thread.sleep(3000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    System.out.println(mesa.getJugadores().get(0).getNombre() + " roba " + fichasRobadas++ + " ficha(s)");
                     mesa.getJugadores().get(0).robar(mesa.getPozo());
+                    mesa.imprimir(mesa.getJugadores().get(0).getFichas());
                 }
                 
                 if (mesa.getPozo().size() == 0) {
@@ -58,6 +77,8 @@ public class Domino {
             }
                 
             if (mesa.getJugadores().get(0).getCantidadFichas() == 0) {
+                System.out.println("\n\nMesa final:");
+                mesa.imprimir(mesa.getMesa());
                 flag = 0;
                 break;
             }

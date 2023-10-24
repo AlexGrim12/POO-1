@@ -24,7 +24,7 @@ public class Mesa {
         this.primerTurno();
         mesa.clear();
     }
-    
+
     public ArrayList<Ficha> getMesa() {
         return mesa;
     }
@@ -38,7 +38,7 @@ public class Mesa {
     }
 
 
-    public void mezclar() {
+    private void mezclar() {
         Random random = new Random();
         for (int i = 0; i < mesa.size(); i++) {
             int j = random.nextInt(mesa.size());
@@ -48,7 +48,7 @@ public class Mesa {
         }
     }
 
-    public void repartir() {
+    private void repartir() {
         for (int i = 0; i < 7; i++) {
             jugadores.get(0).agregarFicha(mesa.get(i));
             jugadores.get(1).agregarFicha(mesa.get(i + 7));
@@ -57,7 +57,7 @@ public class Mesa {
             pozo.add(mesa.get(i));
     }
 
-    public void primerTurno() {
+    private void primerTurno() {
         int max = -1, mano = 0;
         for (int i = 0; i < 7; i ++) {
             if (jugadores.get(0).getFicha(i).getSuma() > max) {
