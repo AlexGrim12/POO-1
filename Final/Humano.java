@@ -7,11 +7,46 @@ public class Humano extends Jugador {
     }
 
     @Override
+    public void primerTurno(ArrayList<Ficha> mesaActual) {
+        Scanner sc = new Scanner(System.in);
+        int ficha = -1;
+        int max = -1;
+
+        for (Ficha f : fichas) {
+            if (f.esMula() && f.getSuma() > max) {
+                max = f.getSuma();
+                ficha = fichas.indexOf(f);
+            }
+        }
+
+        if (ficha != -1)
+            System.out.println(nombre + " juegas la mula mas alta: " + fichas.get(ficha));
+        else {
+            for (int i = 0; i < fichas.size(); i++) {
+                if (fichas.get(i).getSuma() > max) {
+                    max = fichas.get(i).getSuma();
+                    ficha = i;
+                }
+            }
+            System.out.println(nombre + " juegas la ficha mas alta: " + fichas.get(ficha));
+        }
+
+        mesaActual.add(fichas.get(ficha));
+        fichas.remove(ficha);
+        
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
     public void turno(ArrayList<Ficha> mesaActual) {
         Scanner sc = new Scanner(System.in);
-        int ficha;
-        char lado;
-
+        int ficha = 0;
+        char lado = ' ';
+        
         do {
             do {
                 System.out.println("¿Qué ficha quieres jugar? (1 - " + fichas.size() + ")");
@@ -19,12 +54,6 @@ public class Humano extends Jugador {
                 if (ficha < 0 || ficha >= fichas.size())
                     System.out.println("Ficha inválida");
             } while (ficha < 0 || ficha >= fichas.size());
-
-            if (mesaActual.size() == 0) {
-                mesaActual.add(fichas.get(ficha));
-                fichas.remove(ficha);
-                return;
-            }
 
             System.out.println("¿Dónde la quieres jugar? (izquierda o derecha)");
             lado = sc.next().charAt(0);

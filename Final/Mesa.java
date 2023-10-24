@@ -58,7 +58,25 @@ public class Mesa {
     }
 
     private void primerTurno() {
-        int max = -1, mano = 0;
+        int max = -1, mano = -1;
+        for (int i = 0; i < 7; i ++) {
+            if (jugadores.get(0).getFicha(i).esMula() && jugadores.get(0).getFicha(i).getSuma() > max) {
+                max = jugadores.get(0).getFicha(i).getSuma();
+                mano = 0;
+            }
+            if (jugadores.get(1).getFicha(i).esMula() && jugadores.get(1).getFicha(i).getSuma() > max) {
+                max = jugadores.get(1).getFicha(i).getSuma();
+                mano = 1;
+            }
+        }
+
+        if (mano != -1) {
+            if (mano == 1)
+                cambioDeTurno();
+            return;
+        }
+
+        max = -1;
         for (int i = 0; i < 7; i ++) {
             if (jugadores.get(0).getFicha(i).getSuma() > max) {
                 max = jugadores.get(0).getFicha(i).getSuma();
@@ -71,13 +89,19 @@ public class Mesa {
         }
 
         if (mano == 1)
-            moverAlFondo();
+            cambioDeTurno();
     }
 
-    public void moverAlFondo() {
+    public void cambioDeTurno() {
         Jugador aux = jugadores.get(1);
         jugadores.set(1, jugadores.get(0));
         jugadores.set(0, aux);
+    }
+
+    public void imprimir() {
+        for (Ficha ficha : mesa)
+            System.out.print(ficha + "\t");
+        System.out.println();
     }
 
     public void imprimir(ArrayList<Ficha> fichas) {
