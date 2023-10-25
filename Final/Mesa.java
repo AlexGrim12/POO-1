@@ -27,7 +27,7 @@ public class Mesa {
             jugadores.remove(0);
 
         this.repartir(); // Reparte las fichas
-        this.primerTurno(); // Decide quien empieza
+        this.decidirPrimerTurno(); // Decide quien empieza
         mesa.clear(); 
     }
 
@@ -66,7 +66,7 @@ public class Mesa {
     }
 
     // Decide quien empieza 
-    private void primerTurno() {
+    private void decidirPrimerTurno() {
         int max = -1, mano = -1;
 
         // Busca la mula con el numero mas alto
