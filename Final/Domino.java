@@ -4,6 +4,9 @@ import java.util.Scanner;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 
+import domino.Humano;
+import domino.Mesa;
+
 public class Domino {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -12,7 +15,7 @@ public class Domino {
         // Reproduce la musica de fondo
         try {
             musica = AudioSystem.getClip();
-            musica.open(AudioSystem.getAudioInputStream(new File("MoonlightSonata.wav")));
+            musica.open(AudioSystem.getAudioInputStream(Domino.class.getResource("recursos/MoonlightSonata.wav")));
             musica.loop(Clip.LOOP_CONTINUOUSLY); 
         } catch (Exception e) {
             e.printStackTrace();
@@ -106,7 +109,7 @@ public class Domino {
                 musica.stop();
             
             musica = AudioSystem.getClip();
-            musica.open(AudioSystem.getAudioInputStream(new File("Victoria.wav")));
+            musica.open(AudioSystem.getAudioInputStream(Domino.class.getResource("recursos/Victoria.wav")));
             musica.start();
         } catch (Exception e) {
             e.printStackTrace();
