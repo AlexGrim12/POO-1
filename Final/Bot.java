@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 
 public class Bot extends Jugador {
+    // Metodo constructor
     public Bot(String nombre) {
         this.nombre = nombre;
     }
@@ -10,6 +11,7 @@ public class Bot extends Jugador {
         int ficha = -1;
         int max = -1;
 
+        // Busca la mula con el numero mas alto
         for (Ficha f : fichas) {
             if (f.esMula() && f.getSuma() > max) {
                 max = f.getSuma();
@@ -17,9 +19,9 @@ public class Bot extends Jugador {
             }
         }
 
-        if (ficha != -1)
+        if (ficha != -1) // Si tiene mula, la juega
             System.out.println(nombre + " juega la mula mas alta: " + fichas.get(ficha));
-        else {
+        else { // Si no tiene mula, juega la ficha con el numero mas alto
             for (int i = 0; i < fichas.size(); i++) {
                 if (fichas.get(i).getSuma() > max) {
                     max = fichas.get(i).getSuma();
@@ -29,9 +31,11 @@ public class Bot extends Jugador {
             System.out.println(nombre + " juega la ficha mas alta: " + fichas.get(ficha));
         }
 
+        // Agrega la ficha a la mesa y la quita de las fichas del jugador
         mesaActual.add(fichas.get(ficha));
         fichas.remove(ficha);
         
+        // Espera 3 segundos para que el jugador pueda leer el mensaje
         try {
             Thread.sleep(3000);
         } catch (InterruptedException e) {
@@ -41,18 +45,20 @@ public class Bot extends Jugador {
 
     @Override
     public void turno(ArrayList<Ficha> mesaActual) {
+        // Espera 3 segundos para que el jugador pueda leer el mensaje
         try {
             Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }    
 
+        // Busca la primera ficha que pueda jugar y la juega
         for (int i = 0; i < fichas.size(); i++) {
             if (fichas.get(i).getCaraIzq() == mesaActual.get(0).getCaraIzq()) {
-                fichas.get(i).girar();
-                mesaActual.add(0, fichas.get(i));
+                fichas.get(i).girar(); // Gira la ficha si es necesario
+                mesaActual.add(0, fichas.get(i)); // Agrega la ficha a la mesa
                 System.out.println(nombre + " juega " + fichas.get(i) + " a la izquierda");
-                fichas.remove(i);
+                fichas.remove(i); // Quita la ficha de las fichas del jugador
                 break;
             } else if (fichas.get(i).getCaraDer() == mesaActual.get(0).getCaraIzq()) {
                 mesaActual.add(0, fichas.get(i));
@@ -73,6 +79,7 @@ public class Bot extends Jugador {
             }
         }
 
+        // Espera 3 segundos para que el jugador pueda leer el mensaje
         try {
             Thread.sleep(3000);
         } catch (InterruptedException e) {
