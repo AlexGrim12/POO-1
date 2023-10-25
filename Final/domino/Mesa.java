@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Esta clase representa la mesa de juego
+ */
+
 public class Mesa {
-    // Atributos
     private static ArrayList<Ficha> mesa = new ArrayList<Ficha>();
     private static ArrayList<Ficha> pozo = new ArrayList<Ficha>();
     private static List<Jugador> jugadores = new ArrayList<Jugador>() {{
@@ -14,39 +17,53 @@ public class Mesa {
         add(new Bot("Bot 2"));
     }};
     
-    // Metodo constructor
+    /**
+     * Metodo constructor
+     * @param tipoJuego Tipo de juego (1: Jugador vs Bot, 2: Bot vs Bot)
+     */
     public Mesa(int tipoJuego) {
-        // Crea las 28 fichas y las agrega a la mesa
         for (int i = 0; i <= 6; i++) 
             for (int j = i; j <= 6; j++) 
                 mesa.add(new Ficha(i, j));
-        this.mezclar(); // Mezcla las fichas
+        this.mezclar();
 
-        // Elimina un jugador dependiendo del tipo de juego
         if (tipoJuego == 1)  
             jugadores.remove(2);
         else if (tipoJuego == 2)
             jugadores.remove(0);
 
-        this.repartir(); // Reparte las fichas
-        this.decidirPrimerTurno(); // Decide quien empieza
+        this.repartir(); 
+        this.decidirPrimerTurno();
         mesa.clear(); 
     }
 
-    // Metodos getters
+    /**
+     * Metodo getter para las fichas de la mesa
+     * @return Fichas de la mesa
+     */
     public ArrayList<Ficha> getMesa() {
         return mesa;
     }
 
+    /**
+     * Metodo getter para las fichas del pozo
+     * @return Fichas del pozo
+     */
     public ArrayList<Ficha> getPozo() {
         return pozo;
     }
 
+    /**
+     * Metodo getter para el ArrayList de jugadores
+     * @return Jugadores
+     */
     public List<Jugador> getJugadores() {
         return jugadores;
     }
 
-    // Mezcla las fichas aleatoriamente
+    /**
+     * Metodo para mezclar las fichas de la mesa
+     */
     private void mezclar() {
         Random random = new Random();
         for (int i = 0; i < mesa.size(); i++) {
@@ -57,7 +74,9 @@ public class Mesa {
         }
     }
 
-    // Reparte 7 fichas a cada jugador y agrega las demas al pozo
+    /**
+     * Metodo para repartir 7 fichas a cada jugador
+     */
     private void repartir() {
         for (int i = 0; i < 7; i++) {
             jugadores.get(0).agregarFicha(mesa.get(i));
@@ -67,7 +86,9 @@ public class Mesa {
             pozo.add(mesa.get(i));
     }
 
-    // Decide quien empieza 
+    /**
+     * Metodo para decidir quien empieza el juego
+     */
     private void decidirPrimerTurno() {
         int max = -1, mano = -1;
 
@@ -83,14 +104,12 @@ public class Mesa {
             }
         }
 
-        // Si hay mula, el jugador que tenga la mula mas alta empieza
         if (mano != -1) {
             if (mano == 1)
-                cambioDeTurno(); // Si el jugador 1 tiene la mula mas alta, cambia su posicion en el ArrayList
+                cambioDeTurno();
             return;
         }
         
-        // Si no hay mula, busca la ficha con el numero mas alto
         max = -1;
         for (int i = 0; i < 7; i ++) {
             if (jugadores.get(0).getFicha(i).getSuma() > max) {
@@ -104,26 +123,32 @@ public class Mesa {
         }
 
         if (mano == 1)
-            cambioDeTurno(); // Si el jugador 1 tiene la ficha mas alta, cambia su posicion en el ArrayList
+            cambioDeTurno();
     }
 
-    // Cambia el turno de los jugadores moviendo los elementos en el ArrayList
+    /**
+     * Metodo para cambiar el turno de los jugadores
+     */
     public void cambioDeTurno() {
         Jugador aux = jugadores.get(1);
         jugadores.set(1, jugadores.get(0));
         jugadores.set(0, aux);
     }
 
-    // Imprime las fichas de la mesa (Sobrecarga de metodos)
+    /**
+     * Metodo para imprimir las fichas de la mesa
+     */
     public void imprimir() {
         for (Ficha ficha : mesa)
             System.out.print(ficha + "\t");
         System.out.println();
     }
 
-    // Imprime las fichas de un jugador (Sobrecarga de metodos)
+    /**
+     * Metodo para imprimir las fichas de un ArrayList
+     * @param fichas ArrayList de fichas
+     */
     public void imprimir(ArrayList<Ficha> fichas) {
-        // Imprime los numeros de las fichas
         for (int i = 1; i <= fichas.size(); i++)
             System.out.print("  " + i + "\t");
         System.out.println();
