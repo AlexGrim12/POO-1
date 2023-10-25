@@ -104,6 +104,7 @@ public class Domino {
         try {
             if (musica != null)
                 musica.stop();
+            
             musica = AudioSystem.getClip();
             musica.open(AudioSystem.getAudioInputStream(new File("Victoria.wav")));
             musica.start();
