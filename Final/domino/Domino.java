@@ -126,7 +126,7 @@ public class Domino {
             else
                 System.out.println("Empate");
         } else 
-           System.out.println("\n%%%%%%%%%%%%%%% El ganador es " + mesa.getJugadores().get(0).getNombre() + " %%%%%%%%%%%%%%%");
+            System.out.println("\n%%%%%%%%%% El ganador es " + mesa.getJugadores().get(0).getNombre() + " %%%%%%%%%%");
         
         try {
             Thread.sleep(5000);
