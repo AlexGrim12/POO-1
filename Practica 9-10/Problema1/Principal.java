@@ -62,6 +62,16 @@ class Principal {
 			}
 		});
 
+		gente.forEach((k, p) -> {
+			try {
+				if (!p.jubilar()) 
+				throw new OuterException
+					("no puede jubilarse : " + p.getNombre());
+			} catch (OuterException n) {
+				System.out.println(n);
+			}
+		});
+
 		sc.close();
 	}
 }
