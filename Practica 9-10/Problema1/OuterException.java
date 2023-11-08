@@ -27,22 +27,22 @@ class OuterException extends Exception {
 			System.out.println(s);
 		}
 	}
-}
 
-class NacionalidadInvalidaException extends Exception {
-	public NacionalidadInvalidaException(String message) {
-		super(message);
+	class NacionalidadInvalidaException extends Exception {
+		public NacionalidadInvalidaException(String message) {
+			super(message);
+		}
 	}
-}
 
-class EdadInvalidaException extends IllegalArgumentException {
-	public EdadInvalidaException(String message) {
-		super(message);
+	class EdadInvalidaException extends IllegalArgumentException {
+		public EdadInvalidaException(String message) {
+			super(message);
+		}
 	}
-}
 
-class JubilacionException extends Exception {
-	public JubilacionException(String message) {
-		super(message);
+	class JubilacionException extends Exception {
+		public JubilacionException(String message) {
+			super(message);
+		}
 	}
 }
